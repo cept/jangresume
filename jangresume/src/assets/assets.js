@@ -1,6 +1,7 @@
 // import logo from './logo.svg'
 import arrow_icon from './arrow_icon.svg'
 import menu_icon from './menu_icon.svg'
+import work_dashboard_management from './work_dashboard_management.png'
 // import group_profile from './group_profile.png'
 // import bgImage1 from './bgImage1.png'
 // import bgImage2 from './bgImage2.png'
@@ -12,7 +13,6 @@ import menu_icon from './menu_icon.svg'
 // import close_icon from './close_icon.svg'
 // import work_mobile_app from './work_mobile_app.png'
 // import work_fitness_app from './work_fitness_app.png'
-// import work_dashboard_management from './work_dashboard_management.png'
 // import email_icon from './email_icon.svg'
 // import person_icon from './person_icon.svg'
 // import facebook_icon from './facebook_icon.svg'
@@ -28,6 +28,7 @@ const assets = {
 //   logo,
     arrow_icon,
     menu_icon,
+    work_dashboard_management,
 //   group_profile,
 //   bgImage1,
 //   bgImage2,
@@ -39,7 +40,6 @@ const assets = {
 //   close_icon,
 //   work_mobile_app,
 //   work_fitness_app,
-//   work_dashboard_management,
 //   email_icon,
 //   person_icon,
 //   facebook_icon,

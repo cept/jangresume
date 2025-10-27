@@ -4,7 +4,7 @@ const path = require("path");
 const cors = require('cors');
 const morgan = require('morgan');
 
-// const siswaRoutes = require('./src/routes/siswaRoutes');
+const routes = require('./src/routes/web');
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 
 app.get("/", (req, res) =>
     res.json({status: 'OK', app: 'Jangresume' }));
-// app.use('/api', siswaRoutes);
+app.use('/api', routes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
