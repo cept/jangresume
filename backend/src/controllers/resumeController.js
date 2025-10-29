@@ -11,46 +11,62 @@ exports.getList = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const body = req.body;
+        const { personalInfo, experiences, educations, skills } = req.body;
         const payload = {
-            id: body.id,
-            nama_lengkap: body.nama_lengkap,
-            email: body.email,
-            no_hp: body.no_hp,
-            headline: body.headline,
-            alamat: body.alamat,
-            summary: body.summary,
-            experience: body.experience,
-            education: body.education,
-            skills: body.skills
+            // id: personalInfo.id,
+            nama_lengkap: personalInfo.nama_lengkap,
+            email: personalInfo.email,
+            no_hp: personalInfo.no_hp,
+            headline: personalInfo.headline,
+            alamat: personalInfo.alamat,
+            summary: personalInfo.summary,
+            experience: JSON.stringify(experiences),
+            education: JSON.stringify(educations),
+            skills: JSON.stringify(skills)
         };
 
         const info = await resume.insert(payload);
-        res.status(201).json({ message: 'Berhasil menambahkan', ...info });
+        res.status(201).json({ message: 'Berhasil menambahkan', newId: info.insertId});
 
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+exports.getOne = async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    const resumeData = await resume.getOne(id); 
+    
+    res.status(200).json(resumeData);
+
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 exports.update = async (req, res) => {
     try {
         const { id } = req.params;
-        const body = req.body;
+        const { personalInfo, experiences, educations, skills } = req.body;
         const payload = {
-            nama_lengkap: body.nama_lengkap,
-            email: body.email,
-            no_hp: body.no_hp,
-            headline: body.headline,
-            alamat: body.alamat,
-            summary: body.summary,
-            experience: body.experience,
-            education: body.education,
-            skills: body.skills           
+            nama_lengkap: personalInfo.nama_lengkap,
+            email: personalInfo.email,
+            no_hp: personalInfo.no_hp,
+            headline: personalInfo.headline,
+            alamat: personalInfo.alamat,
+            summary: personalInfo.summary,
+            experience: JSON.stringify(experiences || []),
+            education: JSON.stringify(educations || []),
+            skills: JSON.stringify(skills || [])           
         };
 
         const info = await resume.update(id, payload);
-        res.json({ message: 'Berhasil memperbarui', ...info });
+        if (info.affectedRows === 0) {
+            return res.status(404).json({ message: 'Data resume tidak ditemukan' });
+        }
+        res.status(200).json({ message: 'Berhasil memperbarui' });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -61,7 +77,10 @@ exports.destroy = async (req, res) => {
     try {
         const {id} = req.params;
         const info = await resume.destroy(id);
-        res.json({ message: 'Berhasil Menghapus', ...info });
+        if (info.affectedRows === 0) {
+            return res.status(404).json({ message: 'Data resume tidak ditemukan' });
+        }
+        res.status(200).json({ message: 'Berhasil Menghapus' });
 
     } catch (error) {
         res.status(500).json({ message: error.message });

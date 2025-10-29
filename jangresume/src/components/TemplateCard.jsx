@@ -1,18 +1,62 @@
 import React, { useState } from 'react'
 import assets from '../assets/assets'
 import Modal from './Modal';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useResumeForm from './useResumeForm';
+import ResumeForm from './ResumeForm';
 import FormInput from './FormInput';
+import FormTextarea from './FormTextarea';
+
 
 const TemplateCard = ({ work }) => {
+  const { 
+    state, 
+    dispatch, 
+    currentSkill, 
+    setCurrentSkill,
+    ...handlers 
+  } = useResumeForm();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumeName, setResumeName] = useState('');
-  // const navigate = useNavigate();
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    dispatch({ type: 'RESET_FORM' }); 
+    setSubmitError(null); 
+    setIsSubmitting(false);
+  };
+
+  const handleSave = async () => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/dashboard', 
+        state 
+      );
+      const newId = response.data.newId;
+      if (!newId) {
+        throw new Error("Respons dari server tidak valid (newId tidak ditemukan).");
+      }
+
+      // console.log("Data berhasil dikirim, ID baru dari DB:", newId);
+      
+      handleCloseModal(); 
+      
+      navigate(`/dashboard`); 
+
+    } catch (err) {
+      console.error("Error saat mengirim data:", err);
+      setSubmitError(err.response?.data?.message || err.message || "Terjadi kesalahan");
+    } finally {
+      setIsSubmitting(false);  
+    }
   };
 
   return (
@@ -28,19 +72,20 @@ const TemplateCard = ({ work }) => {
     <Modal
       isOpen={isModalOpen}
       onClose={handleCloseModal}
+      onSave={handleSave}
       title={`Buat Resume dari ${work.title}`}
+      isSaving={isSubmitting}
     >
-      <form>
-        <FormInput 
-          label="Nama Resume"
-          id="resume-name"
-          type="text"
-          placeholder="Front End Web"
-          value={resumeName}
-          onChange={(e) => setResumeName(e.target.value)}
-        />
-      </form>
-      
+      <ResumeForm 
+        state={state}
+        dispatch={dispatch}
+        currentSkill={currentSkill}
+        setCurrentSkill={setCurrentSkill}
+        {...handlers}
+      />
+      {submitError && (
+        <div className="mt-4 text-red-600">Error: {submitError}</div>
+      )}
     </Modal>
     </>
   )
