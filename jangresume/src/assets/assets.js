@@ -2,6 +2,7 @@
 import arrow_icon from './arrow_icon.svg'
 import menu_icon from './menu_icon.svg'
 import work_dashboard_management from './work_dashboard_management.png'
+import cv_henhen from './cvhenhen.PNG'
 // import group_profile from './group_profile.png'
 // import bgImage1 from './bgImage1.png'
 // import bgImage2 from './bgImage2.png'
@@ -29,6 +30,7 @@ const assets = {
     arrow_icon,
     menu_icon,
     work_dashboard_management,
+    cv_henhen
 //   group_profile,
 //   bgImage1,
 //   bgImage2,

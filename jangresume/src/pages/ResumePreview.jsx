@@ -64,7 +64,7 @@ const ResumePreview = () => {
         {/* --- HEADER --- */}
         <header className="text-center mb-10">
           <h1 className="text-4xl font-bold text-gray-900">{personalInfo.nama_lengkap}</h1>
-          <h2 className="text-2xl text-primary font-medium mt-1">{personalInfo.headline}</h2>
+          <h2 className="text-2xl font-medium mt-1">{personalInfo.headline}</h2>
           
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm text-gray-600">
             <span>{personalInfo.email}</span>
