@@ -35,7 +35,7 @@ const ResumeCard = ({ service }) => {
         setIsLoadingData(true);
         setSubmitError(null);
         try {
-        const response = await axios.get(`http://localhost:5000/api/dashboard/${service.id}`);
+        const response = await axios.get(`/api/dashboard/${service.id}`);
         dispatch({ type: 'SET_FORM_DATA', payload: response.data });
         setIsModalOpen(true);
         } catch (err) {
@@ -55,7 +55,7 @@ const ResumeCard = ({ service }) => {
         setIsSubmitting(true);
         setSubmitError(null);
         try {
-        await axios.put(`http://localhost:5000/api/dashboard/${service.id}`, state);
+        await axios.put(`/api/dashboard/${service.id}`, state);
         handleCloseModal();
         window.location.reload(); // Refresh halaman untuk melihat perubahan
         } catch (err) {
@@ -80,7 +80,7 @@ const ResumeCard = ({ service }) => {
         setDeleteError(null);
         try {
         // Panggil API DELETE
-        await axios.delete(`http://localhost:5000/api/dashboard/${service.id}`);
+        await axios.delete(`/api/dashboard/${service.id}`);
         
         setIsDeleteModalOpen(false);
         window.location.reload(); // Refresh halaman untuk melihat perubahan

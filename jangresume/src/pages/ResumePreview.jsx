@@ -28,7 +28,7 @@ const ResumePreview = () => {
         try {
             setLoading(true);
             
-            const response = await axios.get(`http://localhost:5000/api/dashboard/${numericId}`);
+            const response = await axios.get(`/api/dashboard/${numericId}`);
             
             
             setResume(response.data);
