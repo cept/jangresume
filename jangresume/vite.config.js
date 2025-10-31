@@ -8,4 +8,20 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+
+  server: {
+    proxy: {
+      // "Setiap request yang dimulai dengan /api..."
+      '/api': {
+        // "...arahkan ke server backend Anda di port 5000"
+        target: 'http://localhost:5000',
+        
+        // 'changeOrigin' diperlukan agar server backend 
+        // mau menerima request dari localhost:3000 (atau port Vite Anda)
+        changeOrigin: true,
+        
+      }
+    }
+  }
+
 })

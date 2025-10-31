@@ -56,6 +56,9 @@ const ResumeCard = ({ service }) => {
         setSubmitError(null);
         try {
         await axios.put(`/api/dashboard/${service.id}`, state);
+
+        sessionStorage.setItem('app-alert', JSON.stringify({ type: 'success', message: 'Resume berhasil diupdate!' }));
+
         handleCloseModal();
         window.location.reload(); // Refresh halaman untuk melihat perubahan
         } catch (err) {
@@ -81,6 +84,8 @@ const ResumeCard = ({ service }) => {
         try {
         // Panggil API DELETE
         await axios.delete(`/api/dashboard/${service.id}`);
+        
+        sessionStorage.setItem('app-alert', JSON.stringify({ type: 'success', message: 'Resume berhasil dihapus!' }));
         
         setIsDeleteModalOpen(false);
         window.location.reload(); // Refresh halaman untuk melihat perubahan
@@ -108,7 +113,6 @@ const ResumeCard = ({ service }) => {
                 <div className="">
                     <button onClick={handleOpenModal} disabled={isLoadingData} className='text-sm bg-blue-900 text-secondary mr-2 px-6 py-2 rounded-md cursor-pointer inline-block hover:scale-105 transition-all'>Edit</button>
                     <Link to={`/dashboard/cv-${service.id}`} className='text-sm bg-slate-700 text-secondary mr-2 px-6 py-2 rounded-md cursor-pointer inline-block hover:scale-105 transition-all' target='_blank'>Pratinjau</Link>
-                    <Link to='/' className='text-sm bg-[#71C9CE] text-secondary mr-2 px-6 py-2 rounded-md cursor-pointer inline-block hover:scale-105 transition-all'>Download</Link>
                     <button onClick={handleOpenDeleteModal} className='text-sm bg-red-700 text-secondary mr-2 px-6 py-2 rounded-md cursor-pointer inline-block hover:scale-105 transition-all'>Hapus</button>
                 </div>
             </div>

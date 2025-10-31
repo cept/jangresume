@@ -32,3 +32,9 @@
     animation: modal-pop-in 0.2s ease-out forwards;
   }
 }
+
+@media print {
+  .print\:hidden {
+    display: none;
+  }
+}

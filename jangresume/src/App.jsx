@@ -5,10 +5,12 @@ import DashboardPage from './pages/Dashboard'
 import TemplatesPage from './pages/Templates'
 import ResumePreview from './pages/ResumePreview'
 import HomePage from './pages/HomePage'
+import Alert from './components/Alert'
 
 const App = () => {
   return (
     <div>
+      <Alert />
       <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />

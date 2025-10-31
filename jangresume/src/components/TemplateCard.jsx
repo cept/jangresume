@@ -40,6 +40,9 @@ const TemplateCard = ({ work }) => {
         '/api/dashboard', 
         state 
       );
+
+      sessionStorage.setItem('app-alert', JSON.stringify({ type: 'success', message: 'Resume baru berhasil ditambahkan!' }));
+      
       const newId = response.data.newId;
       if (!newId) {
         throw new Error("Respons dari server tidak valid (newId tidak ditemukan).");
